@@ -258,7 +258,7 @@ local function UPHVX_fake_script() -- SynapseBootstrapper.client
 	end
 	
 	function retry()
-		loadstring(game:httpget('https://raw.githubusercontent.com/GitLucaI/Synapse-Hub/refs/heads/main/main.lua'))
+		loadstring(game:httpget('https://raw.githubusercontent.com/GitLucaI/Synapse-Hub/refs/heads/main/main.lua'))()
 		task.wait()
 		object:Destroy()
 	end
