@@ -1,0 +1,1335 @@
+print("Doors V2 will come wihtin our custom ui lib!")
+  local RunService = game:GetService("RunService")
+local InputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local char = player.Character
+local humanoid = char:FindFirstChildWhichIsA("Humanoid")
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local RS = game:GetService("RunService")
+local Window = Rayfield:CreateWindow({
+	Name = "Main",
+	LoadingTitle = "Loading interface",
+	LoadingSubtitle = "by Synapse",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Synapse Hub"
+	},
+	Discord = {
+		Enabled = true,
+		Invite = "vMbNSSa9TN",
+		RememberJoins = true 
+	},
+	KeySystem = false, 
+	KeySettings = {
+		Title = "Untitled",
+		Subtitle = "Key System",
+		Note = "No method of obtaining the key is provided",
+		FileName = "Key", 
+		SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+	}
+})
+
+local MainTab = Window:CreateTab("Main", 4483362458)
+
+local Section = MainTab:CreateSection("ESP")
+
+
+local DoorsEsp = MainTab:CreateButton({
+	Name = "Doors",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Door" and d:IsA("BasePart") and d.Parent.Name == "Door" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0, 1)
+				hl.Parent = d
+
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0) 
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0) 
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Door"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Door" and d:IsA("BasePart") and d.Parent.Name == "Door" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0, 1)
+				hl.Parent = d
+
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Door"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Keys",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Key" and d:IsA("BasePart") then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 0.666667, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Key"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Key" and d:IsA("BasePart") then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 0.666667, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Key"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local BookEsp = MainTab:CreateButton({
+	Name = "Books",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Book" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 0, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Book"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Book" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 0, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Book"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Chests",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "ChestBox" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Chest"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "ChestBox" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Chest"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Gold Esp",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "GoldVisualHolder" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Gold"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "GoldVisualHolder" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Gold"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Wardrobes",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Wardrobe" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.34902, 0.247059, 0.176471)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Wardrobe"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Wardrobe" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.34902, 0.247059, 0.176471)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Wardrobe"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Lockers",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Locker_Large" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.34902, 0.34902, 0.34902)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Locker"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Locker_Large" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.34902, 0.34902, 0.34902)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Locker"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Fuses",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "FuseModel" and d.Parent.Parent.Name == "FuseObtain" then
+				task.wait()
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 0.666667, 0.498039)
+				hl.Parent = d.Parent.Parent
+
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0) 
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0) 
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Fuse"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "FuseModel" and d.Parent.Parent.Name == "FuseObtain" then
+				task.wait()
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 0.666667, 0.498039)
+				hl.Parent = d.Parent.Parent
+
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0) 
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0) 
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Fuse"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Generators",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "MinesGenerator" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Generator"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "MinesGenerator" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Generator"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Vine Chests",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Chest_Vine" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Vine Chest"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Chest_Vine" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Vine Chest"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Shears Toolshed",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Toolshed_Small" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Shears Toolshed"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Toolshed_Small" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Shears Toolshed"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Toolboxes",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Toolbox" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Toolbox"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Toolbox" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(1, 1, 0.498039)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Toolbox"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Anchors",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "MinesAnchor"then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 1, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Anchor"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "MinesAnchor"then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 1, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Anchor"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Water Pumps",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "WaterPump"then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0, 0, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Pump"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "WaterPump"then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0, 0, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Pump"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Levers",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Main" and d.Parent.Name == "LeverForGate" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0.666667, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Lever"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Main" and d.Parent.Name == "LeverForGate" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0.666667, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Lever"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Rush and Ambush",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "RushNew" then
+				d.Transparency = 0
+				task.wait()
+				local hl = Instance.new("Highlight")
+				if d.Parent.Name == "RushMoving" then
+					hl.FillColor = Color3.new(0.392157, 0, 0)
+					hl.Parent = d
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = d
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = d
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.BackgroundTransparency = 1 
+					tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+					tl.Text = "Rush"
+					tl.Parent = bg
+				else
+					hl.FillColor = Color3.new(0.333333, 1, 0.498039)
+					hl.Parent = d
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = d
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = d
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.BackgroundTransparency = 1 
+					tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+					tl.Text = "Ambush"
+					tl.Parent = bg
+				end
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "RushNew" then
+				d.Transparency = 0
+				task.wait()
+				local hl = Instance.new("Highlight")
+				if d.Parent.Name == "RushMoving" then
+					hl.FillColor = Color3.new(0.392157, 0, 0)
+					hl.Parent = d
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = d
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = d
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.BackgroundTransparency = 1 
+					tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+					tl.Text = "Rush"
+					tl.Parent = bg
+				else
+					hl.FillColor = Color3.new(0.333333, 1, 0.498039)
+					hl.Parent = d
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = d
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = d
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.BackgroundTransparency = 1 
+					tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+					tl.Text = "Ambush"
+					tl.Parent = bg
+				end
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Figure",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "FigureRig" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.392157, 0, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Figure"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "FigureRig" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.392157, 0, 0)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Figure"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Eyes",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "Core" and d.Parent.Name == "Eyes" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Eyes"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Core" and d.Parent.Name == "Eyes" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.666667, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Eyes"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Snare",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+			if d.Name == "SnareBase" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Snare"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "SnareBase" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.333333, 0.666667, 1)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Snare"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+local KeysEsp = MainTab:CreateButton({
+	Name = "Grumble",
+	Callback = function()
+
+		for _, d in pairs(game.Workspace:GetDescendants()) do
+			if d.Name == "Grumbo" or d.Name == "_QueenGrumble" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.701961, 0.701961, 0.701961)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Grumble"
+				tl.Parent = bg
+			end
+		end
+
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "Grumbo" or d.Name == "_QueenGrumble" then
+				local hl = Instance.new("Highlight")
+				hl.FillColor = Color3.new(0.701961, 0.701961, 0.701961)
+				hl.Parent = d
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = d
+				bg.Size = UDim2.new(8, 0, 2, 0)
+				bg.Parent = d
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.BackgroundTransparency = 1 
+				tl.TextColor3 = Color3.fromRGB(255, 255, 255)
+				tl.Text = "Grumble"
+				tl.Parent = bg
+			end
+		end)
+
+	end,
+})
+
+
+local SecondTab = Window:CreateTab("Bypasses", 4483362458)
+
+local Section = SecondTab:CreateSection("Entities")
+
+local Button = SecondTab:CreateButton({
+	Name = "Screech",
+	Callback = function()
+		game.Workspace.CurrentCamera.DescendantAdded:Connect(function(d)
+			if d.Name == "Screech" then
+				d:Destroy()
+			end
+		end)
+	end,
+})
+
+local Button = SecondTab:CreateButton({
+	Name = "Snare",
+	Callback = function()
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "SnareBase" then
+				d:Destroy()
+			end
+		end)
+	end,
+})
+
+
+local Button = SecondTab:CreateButton({
+	Name = "Giggle",
+	Callback = function()
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			if d.Name == "GiggleCeiling" then
+				d:Destroy()
+			end
+		end)
+	end,
+})
+
+local Section = SecondTab:CreateSection("Rooms")
+
+local Button = SecondTab:CreateButton({
+	Name = "Seek",
+	Callback = function()
+		game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+			
+		end)
+	end,
+})
+
+local ThirdTab = Window:CreateTab("Notifiers", 4483362458)
+
+local Section = ThirdTab:CreateSection("Entities")
+
+local rushambuhsnot = false
+
+local Toggle = ThirdTab:CreateToggle({
+	Name = "Rush",
+	CurrentValue = false,
+	Flag = "Toggle1",
+	Callback = function(Value)
+		rushambuhsnot = Value
+	end,
+})
+
+game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+	if d.Name == "RushNew" and rushambuhsnot then
+		if d.Parent.Name == "RushMoving" then
+			Rayfield:Notify({
+				Title = "Entity notifier",
+				Content = "Rush has spawned!",
+				Duration = 3,
+				Image = 4483362458,
+				Actions = { 
+					Ignore = {
+						Name = "Okay!",
+						Callback = function()
+						end
+					},
+				},
+			})
+		else
+			Rayfield:Notify({
+				Title = "Entity notifiere",
+				Content = "Ambush has spawned!",
+				Duration = 3,
+				Image = 4483362458,
+				Actions = { 
+					Ignore = {
+						Name = "Okay!",
+						Callback = function()
+						end
+					},
+				},
+			})
+		end
+	end
+end)
+
+local FourthTab = Window:CreateTab("Player Scripts", 4483362458)
+
+local Section = FourthTab:CreateSection("Character")
+
+local Slider = FourthTab:CreateSlider({
+	Name = "Walkspeed Boost (Buggy)",
+	Range = {16, 25},
+	Increment = 1,
+	Suffix = "Speed",
+	CurrentValue = 16,
+	Flag = "SpeedSlider", 
+	Callback = function(Value)
+		humanoid.WalkSpeed = Value
+	end,
+})
+
+local Button = FourthTab:CreateButton({
+	Name = "Reset Character",
+	Callback = function()
+		humanoid.Health = 0
+	end,
+})
+
+local Button = FourthTab:CreateButton({
+	Name = "Revive",
+	Callback = function()
+		game.ReplicatedStorage.RemotesFolder.Revive:FireServer()
+	end,
+})
+
+local FifthTab = Window:CreateTab("Misc", 4483362458)
+
+local Section = FifthTab:CreateSection("Misc")
+
+local Button = FifthTab:CreateButton({
+	Name = "Play Again",
+	Callback = function()
+		game.ReplicatedStorage.RemotesFolder.PlayAgain:FireServer()
+	end,
+})
+
+local Button = FifthTab:CreateButton({
+	Name = "Lobby",
+	Callback = function()
+		game.ReplicatedStorage.RemotesFolder.Lobby:FireServer()
+	end,
+})
+
+local instantproximities = false
+local Toggle = FifthTab:CreateToggle({
+	Name = "Instant Proximities",
+	CurrentValue = false,
+	Flag = "Toggle2",
+	Callback = function(Value)
+		if instantproximities == true then
+			for _, d in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+				if d:IsA("ProximityPrompt") and instantproximities then
+					d.HoldDuration = 0
+				end
+			end
+		end
+		instantproximities = Value
+	end,
+})
+
+game.Workspace.CurrentRooms.DescendantAdded:Connect(function(d)
+	if d:IsA("ProximityPrompt") and instantproximities then
+		d.HoldDuration = 0
+	end
+end)
+
+local Button = FourthTab:CreateButton({
+	Name = "Anticheat Bypass (Broken!)",
+	Callback = function()
+		game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop:Destroy()
+		require(game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).freemouse = false
+		game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
+		task.spawn(function()
+			while task.wait() do
+				game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+			end
+		end)
+	end,
+})
+
+
+local Button = FourthTab:CreateButton({
+	Name = "Gyroscope (Can't Disable)",
+	Callback = function()
+
+		if InputService.GyroscopeEnabled then
+
+			if not InputService.GyroscopeEnabled or not InputService.AccelerometerEnabled then
+				return
+			end
+
+			local mc = workspace.CurrentCamera
+			local half_pi = math.pi / 2
+			local gx, gy, gz = 0, 0, 0
+
+			InputService.DeviceGravityChanged:connect(function(accel)
+				local gravity = accel.Position
+				gx, gy, gz = gravity.X, gravity.Y, gravity.Z
+			end)
+
+			local CharTransparency = 0
+			local function SetCharacterTransparency(charModel, toggle)
+				CharTransparency = toggle
+				local charPrimary = charModel.PrimaryPart
+				for _, part in pairs(charModel:GetDescendants()) do
+					if (part:IsA("BasePart") or part:IsA("MeshPart")) and part ~= charPrimary then
+						if not part.Parent:IsA("Tool") then
+							part.Transparency = toggle
+						end
+					end
+				end
+			end
+
+			local function tgyro()
+				local roll = (gx > 0 and half_pi or -half_pi) - math.atan2(gx, gz)
+				local pitch = math.atan2(gy, (gx * gx + gz * gz) ^ 0.5) * 2
+				local _, rcf = InputService:GetDeviceRotation()
+				local _, _, yaw = rcf:toEulerAnglesXYZ()
+
+				local acc = InputService:GetDeviceAcceleration().Position
+				local sens = 0.07 
+				local camshift_factor = acc.X
+
+				if math.abs(camshift_factor) < sens then
+					camshift_factor = 0
+				end
+
+				local cp = workspace.CurrentCamera.CFrame.Position
+				if mc.ViewportSize.Y > mc.ViewportSize.X then
+					local sd = (select(7, rcf:GetComponents()))
+					mc.CFrame = CFrame.new(cp)
+						* CFrame.Angles(0, sd * 10, -2 * rcf:ToOrientation())
+						* CFrame.Angles(pitch, 0, 0)
+				else
+					mc.CFrame = CFrame.new(cp)
+						* CFrame.Angles(0, yaw * 2, 0) 
+						* CFrame.Angles(pitch * .25, 0, roll) 
+				end
+			end
+
+			local char = player.Character or player.CharacterAdded:Wait()
+			SetCharacterTransparency(char, 1)
+
+			mc.CameraType = Enum.CameraType.Custom
+			RunService:BindToRenderStep("Camera", Enum.RenderPriority.Camera.Value + 1, tgyro)
+		end
+
+	end,
+})
