@@ -1,5 +1,4 @@
-print("Doors V2 will come wihtin our custom ui lib!")
-  local RunService = game:GetService("RunService")
+local RunService = game:GetService("RunService")
 local InputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local char = player.Character
@@ -1268,7 +1267,11 @@ local Button = FourthTab:CreateButton({
 local Button = FourthTab:CreateButton({
 	Name = "Gyroscope (Can't Disable)",
 	Callback = function()
-
+		game.Workspace.CurrentCamera.DescendantAdded:Connect(function(d)
+			if d.Name == "Screech" then
+				d:Destroy()
+			end
+		end)
 		if InputService.GyroscopeEnabled then
 
 			if not InputService.GyroscopeEnabled or not InputService.AccelerometerEnabled then
