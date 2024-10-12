@@ -1,0 +1,314 @@
+local RunService = game:GetService("RunService")
+local InputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local char = player.Character
+local humanoid = char:FindFirstChildWhichIsA("Humanoid")
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local RS = game:GetService("RunService")
+local Window = Rayfield:CreateWindow({
+	Name = "Main",
+	LoadingTitle = "Loading interface",
+	LoadingSubtitle = "by Synapse",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Synapse Hub"
+	},
+	Discord = {
+		Enabled = true,
+		Invite = "vMbNSSa9TN",
+		RememberJoins = true 
+	},
+	KeySystem = false, 
+	KeySettings = {
+		Title = "Untitled",
+		Subtitle = "Key System",
+		Note = "No method of obtaining the key is provided",
+		FileName = "Key", 
+		SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+	}
+})
+
+local MainTab = Window:CreateTab("Main", 4483362458)
+
+local Section = MainTab:CreateSection("ESP")
+
+local Button = MainTab:CreateButton({
+	Name = "Bones ESP",
+	Callback = function()
+		for _, c in pairs(workspace:WaitForChild("Map"):GetChildren()) do
+			if c.Name == "Bone" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(0.384314, 0.384314, 0.384314)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Bone"
+					tl.Parent = bg
+				end
+			end
+		end
+		workspace:WaitForChild("Map").ChildAdded:Connect(function(c)
+			if c.Name == "Bone" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(0.384314, 0.384314, 0.384314)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Bone"
+					tl.Parent = bg
+				end
+			end
+		end)
+	end,
+})
+
+local Button = MainTab:CreateButton({
+	Name = "Fingerprints ESP",
+	Callback = function()
+		for _, c in pairs(workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Fingerprints:GetChildren()) do
+			if c.Name == "Fingerprint" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(1, 1, 1)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Fingerprint"
+					tl.Parent = bg
+				end
+			end
+		end
+		workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Fingerprints.ChildAdded:Connect(function(c)
+			if c.Name == "Fingerprint" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(1, 1, 1)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Fingerprint"
+					tl.Parent = bg
+				end
+			end
+		end)
+	end,
+})
+
+local Button = MainTab:CreateButton({
+	Name = "Orbs ESP",
+	Callback = function()
+		for _, c in pairs(workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Orbs:GetChildren()) do
+			if c.Name == "Orb" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(0.333333, 0.666667, 1)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Orb"
+					tl.Parent = bg
+				end
+			end
+		end
+		workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Orbs.ChildAdded:Connect(function(c)
+			if c.Name == "Orb" then
+				if not c:FindFirstChild("ESP") then
+					local ESP = Instance.new("Highlight")
+					ESP.FillColor = Color3.new(0.333333, 0.666667, 1)
+					ESP.Name = "ESP"
+					task.wait()
+					ESP.Parent = c
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = c
+					bg.Size = UDim2.new(4, 0, 1, 0) 
+					bg.Parent = c
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0) 
+					tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1 
+					tl.Text = "Orb"
+					tl.Parent = bg
+				end
+			end
+		end)
+	end,
+})
+
+local Button = MainTab:CreateButton({
+	Name = "NPCs ESP",
+	Callback = function()
+		for _, c in pairs(workspace:WaitForChild("NPCs"):GetChildren()) do
+			if not c:FindFirstChild("ESP") then
+				local ESP = Instance.new("Highlight")
+				ESP.FillColor = Color3.new(0.392157, 0.0392157, 0)
+				ESP.Name = "ESP"
+				task.wait()
+				ESP.Parent = c
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = c
+				bg.Size = UDim2.new(4, 0, 1, 0) 
+				bg.Parent = c
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0) 
+				tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+				tl.TextStrokeTransparency = 0
+				tl.BackgroundTransparency = 1 
+				tl.Text = c.Name
+				tl.Parent = bg
+			end
+		end
+		workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
+			if not c:FindFirstChild("ESP") then
+				local ESP = Instance.new("Highlight")
+				ESP.FillColor = Color3.new(0.392157, 0.0392157, 0)
+				ESP.Name = "ESP"
+				task.wait()
+				ESP.Parent = c
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = c
+				bg.Size = UDim2.new(4, 0, 1, 0) 
+				bg.Parent = c
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0) 
+				tl.TextColor3 = Color3.fromRGB(255 ,0, 0)
+				tl.TextStrokeTransparency = 0
+				tl.BackgroundTransparency = 1 
+				tl.Text = c.Name
+				tl.Parent = bg
+			end
+		end)
+	end,
+})
+
+local Section = MainTab:CreateSection("Lighting")
+
+local Button = MainTab:CreateButton({
+	Name = "Remove Lighting (FullBright)",
+	Callback = function()
+		for _, c in pairs(game.Lighting:GetChildren()) do
+			if c.Name ~= "GogglesTint" then
+				c:Destroy()
+			end
+		end
+		game.Lighting.GlobalShadows = false
+		game.Lighting.Brightness = 5
+		game.Lighting.ClockTime = 14
+		game.Lighting.FogEnd = 999999999999999
+	end,
+})
+
+local Section = MainTab:CreateSection("Lighting")
+
+local Slider = MainTab:CreateSlider({
+	Name = "Walkspeed",
+	Range = {16, 100},
+	Increment = 1,
+	Suffix = "",
+	CurrentValue = 0,
+	Flag = "WsSlider",
+	Callback = function(Value)
+		humanoid.WalkSpeed = Value
+	end,
+})
+
+local noclipv = Instance.new("BoolValue")
+noclipv.Value = false
+local Toggle = MainTab:CreateToggle({
+	Name = "No-Clip",
+	CurrentValue = false,
+	Flag = "ClipToggle",
+	Callback = function(Value)
+		noclipv.Value = Value
+	end,
+})
+
+noclipv.Changed:Connect(function(v)
+	if v then
+		for _, child in pairs(char:GetDescendants()) do
+			if child:IsA("BasePart") and child.CanCollide == true then
+				child.CanCollide = false
+			end
+		end
+	else
+		for _, child in pairs(char:GetDescendants()) do
+			if child:IsA("BasePart") and child.CanCollide == false then
+				child.CanCollide = true
+			end
+		end
+	end
+end)
