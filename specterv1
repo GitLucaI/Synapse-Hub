@@ -121,6 +121,20 @@ local Button = MainTab:CreateButton({
 		end
 		workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Fingerprints.ChildAdded:Connect(function(c)
 			if c.Name == "Fingerprint" then
+				Rayfield:Notify({
+					Title = "Spawner",
+					Content = "Fingerprint has spawned!",
+					Duration = 6.5,
+					Image = 4483362458,
+					Actions = { -- Notification Buttons
+						Ignore = {
+							Name = "Okay!",
+							Callback = function()
+
+							end
+						},
+					},
+				})
 				if not c:FindFirstChild("ESP") then
 					local ESP = Instance.new("Highlight")
 					ESP.FillColor = Color3.new(1, 1, 1)
