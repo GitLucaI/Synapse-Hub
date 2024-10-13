@@ -177,6 +177,20 @@ local Button = MainTab:CreateButton({
 		end
 		workspace:WaitForChild("Dynamic"):WaitForChild("Evidence").Orbs.ChildAdded:Connect(function(c)
 			if c.Name == "Orb" then
+				Rayfield:Notify({
+					Title = "Spawner",
+					Content = "Orb has spawned!",
+					Duration = 6.5,
+					Image = 4483362458,
+					Actions = { -- Notification Buttons
+						Ignore = {
+							Name = "Okay!",
+							Callback = function()
+								
+							end
+						},
+					},
+				})
 				if not c:FindFirstChild("ESP") then
 					local ESP = Instance.new("Highlight")
 					ESP.FillColor = Color3.new(0.333333, 0.666667, 1)
