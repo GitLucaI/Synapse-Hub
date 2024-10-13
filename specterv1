@@ -232,18 +232,24 @@ local Button = MainTab:CreateButton({
 })
 
 local Section = MainTab:CreateSection("Character")
-
+local cws = 7
 local Slider = MainTab:CreateSlider({
 	Name = "Walkspeed",
-	Range = {16, 100},
+	Range = {5, 100},
 	Increment = 1,
 	Suffix = "",
 	CurrentValue = 0,
 	Flag = "WsSlider",
 	Callback = function(Value)
 		humanoid.WalkSpeed = Value
+		cws = Value
 	end,
 })
+
+RunService.RenderStepped:Connect(function()
+	humanoid.WalkSpeed = cws
+end)
+
 
 local noclipv = Instance.new("BoolValue")
 noclipv.Value = false
