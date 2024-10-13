@@ -2,6 +2,7 @@ local RunService = game:GetService("RunService")
 local InputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local char = player.Character
+local camera = game.Workspace.CurrentCamera
 local humanoid = char:FindFirstChildWhichIsA("Humanoid")
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local RS = game:GetService("RunService")
@@ -235,28 +236,28 @@ local Button = MainTab:CreateButton({
 	Name = "NPCs ESP",
 	Callback = function()
 		for _, c in pairs(workspace:WaitForChild("NPCs"):GetChildren()) do
-			if not c:FindFirstChild("ESP") then
-				c:FindFirstChild("Base").Changed:Connect(function()
-					local base = c:FindFirstChild("Base")
-					if base:IsA("BasePart") then
-						if base.Transparency == 0 then
-							Rayfield:Notify({
-								Title = "Spawner",
-								Content = "Hunt has begun!",
-								Duration = 2,
-								Image = 4483362458,
-								Actions = { -- Notification Buttons
-									Ignore = {
-										Name = "Okay!",
-										Callback = function()
+			c:FindFirstChild("Base").Changed:Connect(function()
+				local base = c:FindFirstChild("Base")
+				if base:IsA("BasePart") then
+					if base.Transparency == 0 then
+						Rayfield:Notify({
+							Title = "Spawner",
+							Content = "Hunt has begun!",
+							Duration = 2,
+							Image = 4483362458,
+							Actions = { -- Notification Buttons
+								Ignore = {
+									Name = "Okay!",
+									Callback = function()
 
-										end
-									},
+									end
 								},
-							})
-						end
+							},
+						})
 					end
-				end)
+				end
+			end)
+			if not c:FindFirstChild("ESP") then
 				local ESP = Instance.new("Highlight")
 				ESP.FillColor = Color3.new(0.392157, 0.0392157, 0)
 				ESP.Name = "ESP"
@@ -279,6 +280,27 @@ local Button = MainTab:CreateButton({
 			end
 		end
 		workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
+			c:FindFirstChild("Base").Changed:Connect(function()
+				local base = c:FindFirstChild("Base")
+				if base:IsA("BasePart") then
+					if base.Transparency == 0 then
+						Rayfield:Notify({
+							Title = "Spawner",
+							Content = "Hunt has begun!",
+							Duration = 2,
+							Image = 4483362458,
+							Actions = { -- Notification Buttons
+								Ignore = {
+									Name = "Okay!",
+									Callback = function()
+
+									end
+								},
+							},
+						})
+					end
+				end
+			end)
 			if not c:FindFirstChild("ESP") then
 				local ESP = Instance.new("Highlight")
 				ESP.FillColor = Color3.new(0.392157, 0.0392157, 0)
@@ -321,7 +343,7 @@ local Button = MainTab:CreateButton({
 	end,
 })
 
-local Section = MainTab:CreateSection("Lighting")
+local Section = MainTab:CreateSection("Character")
 
 local Slider = MainTab:CreateSlider({
 	Name = "Walkspeed",
@@ -346,8 +368,91 @@ local Toggle = MainTab:CreateToggle({
 	end,
 })
 
-noclipv.Changed:Connect(function(v)
-	if v then
+local Section = MainTab:CreateSection("Automation")
+
+
+local Button = MainTab:CreateButton({
+	Name = "Auto-collect bone",
+	Callback = function()
+
+		for _, c in pairs(game.Workspace:WaitForChild("Map"):GetChildren()) do
+			if c.Name == "Bone" and c:IsA("BasePart") then
+				local oldcframe = char.PrimaryPart.CFrame
+				task.wait()
+
+				char.PrimaryPart.CFrame = c.CFrame
+
+				local la = c.Position + Vector3.new(0, 1.5, 0)
+				camera.CameraType = Enum.CameraType.Scriptable
+				camera.CFrame = CFrame.new(camera.CFrame.Position, la)
+
+				local proximity = c:FindFirstChild("Bone")
+				if proximity and proximity:IsA("ProximityPrompt") then
+					repeat
+						proximity:InputHoldBegin()
+						wait(proximity.HoldDuration)
+						proximity:InputHoldEnd()
+						task.wait(0.1)
+					until not game.Workspace:FindFirstChild("Map"):FindFirstChild("Bone")
+				end
+
+				task.wait()
+				Rayfield:Notify({
+					Title = "Auto-play",
+					Content = "Succesfully collected bone!",
+					Duration = 2,
+					Image = 4483362458,
+					Actions = { -- Notification Buttons
+						Ignore = {
+							Name = "Okay!",
+							Callback = function()
+
+							end
+						},
+					},
+				})
+				char.PrimaryPart.CFrame = oldcframe
+				camera.CameraType = Enum.CameraType.Custom
+			end
+		end
+	end,
+})
+
+local Button = MainTab:CreateButton({
+	Name = "Auto-highlight ghost room (Run before start)",
+	Callback = function()
+		workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
+			local base = c:WaitForChild("Base")
+			if base:IsA("BasePart") then
+				local part = Instance.new("Part")
+				part.Anchored = true
+				part.CFrame = base.CFrame
+				part.CanCollide = false
+				part.Size = Vector3.new(4, 1, 1)
+
+				local bg = Instance.new("BillboardGui")
+				bg.AlwaysOnTop = true
+				bg.Adornee = part
+				bg.Size = UDim2.new(4, 0, 1, 0)
+				bg.Parent = part
+
+				local tl = Instance.new("TextLabel")
+				tl.TextScaled = true
+				tl.Size = UDim2.new(1, 0, 1, 0)
+				tl.TextColor3 = Color3.fromRGB(255, 0, 0)
+				tl.TextStrokeTransparency = 0
+				tl.BackgroundTransparency = 1
+				tl.Text = "Ghost Room"
+				tl.Parent = bg
+				task.wait()
+				part.Parent = workspace
+			end
+		end)
+	end,
+})
+
+RunService.Stepped:Connect(function()
+	if noclipv.Value then
 		for _, child in pairs(char:GetDescendants()) do
 			if child:IsA("BasePart") and child.CanCollide == true then
 				child.CanCollide = false
@@ -355,9 +460,11 @@ noclipv.Changed:Connect(function(v)
 		end
 	else
 		for _, child in pairs(char:GetDescendants()) do
-			if child:IsA("BasePart") and child.CanCollide == false then
+			if child:IsA("BasePart") and child.CanCollide == false and (child.Name == "LowerTorso" or child.Name == "UpperTorso" or child.Name == "Torso") then
 				child.CanCollide = true
 			end
 		end
 	end
 end)
+
+
