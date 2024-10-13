@@ -3,7 +3,14 @@ local InputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local char = player.Character
 local charroot = char.PrimaryPart
-
+local legacymap
+if not workspace:FindFirstChild("Map") then
+	for _,c in pairs(workspace:GetChildren()) do
+		if c:FindFirstChild("Doors") then
+			legacymap = c
+		end
+	end
+end
 local camera = game.Workspace.CurrentCamera
 local humanoid = char:FindFirstChildWhichIsA("Humanoid")
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
@@ -75,16 +82,29 @@ local Section = MainTab:CreateSection("ESP")
 local Button = MainTab:CreateButton({
 	Name = "Bones ESP",
 	Callback = function()
-		for _, c in pairs(workspace:WaitForChild("Map"):GetChildren()) do
-			if c.Name == "Bone" then
-				createEsp(c)
+		if workspace:FindFirstChild("Map") then
+			for _, c in pairs(workspace:WaitForChild("Map"):GetChildren()) do
+				if c.Name == "Bone" then
+					createEsp(c)
+				end
 			end
-		end
-		workspace:WaitForChild("Map").ChildAdded:Connect(function(c)
-			if c.Name == "Bone" then
-				createEsp(c)
+			workspace:WaitForChild("Map").ChildAdded:Connect(function(c)
+				if c.Name == "Bone" then
+					createEsp(c)
+				end
+			end)
+		else
+			for _, c in pairs(workspace:WaitForChild(legacymap.Name):GetChildren()) do
+				if c.Name == "Bone" then
+					createEsp(c:WaitForChild("BoneModel"))
+				end
 			end
-		end)
+			workspace:WaitForChild(legacymap).ChildAdded:Connect(function(c)
+				if c.Name == "Bone" then
+					createEsp(c:WaitForChild("BoneModel"))
+				end
+			end)
+		end	
 	end,
 })
 
@@ -151,9 +171,17 @@ local Button = MainTab:CreateButton({
 local Button = MainTab:CreateButton({
 	Name = "Closet ESP",
 	Callback = function()
-		for _, c in pairs(workspace:WaitForChild("Map"):WaitForChild("Closets"):GetChildren()) do
-			if c.Name == "Closet" then
-				createEsp(c)
+		if workspace:FindFirstChild("Map") then
+			for _, c in pairs(workspace:WaitForChild("Map"):WaitForChild("Closets"):GetChildren()) do
+				if c.Name == "Closet" then
+					createEsp(c)
+				end
+			end
+		else
+			for _, c in pairs(workspace:WaitForChild(legacymap.Name):WaitForChild("Building").Models:GetChildren()) do
+				if c.Name == "Closet" then
+					createEsp(c)
+				end
 			end
 		end
 	end,
@@ -162,29 +190,31 @@ local Button = MainTab:CreateButton({
 local Button = MainTab:CreateButton({
 	Name = "NPCs ESP",
 	Callback = function()
-		for _, c in pairs(workspace:WaitForChild("NPCs"):GetChildren()) do
-			c:FindFirstChild("Base").Changed:Connect(function()
-				local base = c:FindFirstChild("Base")
-				if base:IsA("BasePart") then
-					if base.Transparency == 0 then
-						Rayfield:Notify({
-							Title = "Spawner",
-							Content = "Hunt has begun!",
-							Duration = 2,
-							Image = 4483362458,
-							Actions = { -- Notification Buttons
-								Ignore = {
-									Name = "Close",
-									Callback = function()
+		for _, c in pairs(workspace:GetChildren()) do
+			if c:FindFirstChild("Base") then
+				createEsp(c)
+				c:FindFirstChild("Base").Changed:Connect(function()
+					local base = c:FindFirstChild("Base")
+					if base:IsA("BasePart") then
+						if base.Transparency == 0 then
+							Rayfield:Notify({
+								Title = "Spawner",
+								Content = "Hunt has begun!",
+								Duration = 2,
+								Image = 4483362458,
+								Actions = { -- Notification Buttons
+									Ignore = {
+										Name = "Close",
+										Callback = function()
 
-									end
+										end
+									},
 								},
-							},
-						})
+							})
+						end
 					end
-				end
-			end)
-			createEsp(c)
+				end)
+			end
 		end
 		workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
 			c:FindFirstChild("Base").Changed:Connect(function()
@@ -268,45 +298,87 @@ local Section = MainTab:CreateSection("Automation")
 local Button = MainTab:CreateButton({
 	Name = "Auto-collect bone",
 	Callback = function()
+		if workspace:FindFirstChild("Map") then
+			for _, c in pairs(game.Workspace:WaitForChild("Map"):GetChildren()) do
+				if c.Name == "Bone" and c:IsA("BasePart") then
+					local oldcframe = char.PrimaryPart.CFrame
+					task.wait()
 
-		for _, c in pairs(game.Workspace:WaitForChild("Map"):GetChildren()) do
-			if c.Name == "Bone" and c:IsA("BasePart") then
-				local oldcframe = char.PrimaryPart.CFrame
-				task.wait()
+					char.PrimaryPart.CFrame = c.CFrame
 
-				char.PrimaryPart.CFrame = c.CFrame
+					local la = c.Position + Vector3.new(0, 1.5, 0)
+					camera.CameraType = Enum.CameraType.Scriptable
+					camera.CFrame = CFrame.new(camera.CFrame.Position, la)
 
-				local la = c.Position + Vector3.new(0, 1.5, 0)
-				camera.CameraType = Enum.CameraType.Scriptable
-				camera.CFrame = CFrame.new(camera.CFrame.Position, la)
+					local proximity = c:FindFirstChild("Bone")
+					if proximity and proximity:IsA("ProximityPrompt") then
+						repeat
+							proximity:InputHoldBegin()
+							wait(proximity.HoldDuration)
+							proximity:InputHoldEnd()
+							task.wait(0.1)
+						until not game.Workspace:FindFirstChild("Map"):FindFirstChild("Bone")
+					end
 
-				local proximity = c:FindFirstChild("Bone")
-				if proximity and proximity:IsA("ProximityPrompt") then
-					repeat
-						proximity:InputHoldBegin()
-						wait(proximity.HoldDuration)
-						proximity:InputHoldEnd()
-						task.wait(0.1)
-					until not game.Workspace:FindFirstChild("Map"):FindFirstChild("Bone")
-				end
+					task.wait()
+					Rayfield:Notify({
+						Title = "Auto-play",
+						Content = "Succesfully collected bone!",
+						Duration = 2,
+						Image = 4483362458,
+						Actions = { -- Notification Buttons
+							Ignore = {
+								Name = "Close",
+								Callback = function()
 
-				task.wait()
-				Rayfield:Notify({
-					Title = "Auto-play",
-					Content = "Succesfully collected bone!",
-					Duration = 2,
-					Image = 4483362458,
-					Actions = { -- Notification Buttons
-						Ignore = {
-							Name = "Close",
-							Callback = function()
-
-							end
+								end
+							},
 						},
-					},
-				})
-				char.PrimaryPart.CFrame = oldcframe
-				camera.CameraType = Enum.CameraType.Custom
+					})
+					char.PrimaryPart.CFrame = oldcframe
+					camera.CameraType = Enum.CameraType.Custom
+				end
+			end
+		else
+			for _, c in pairs(game.Workspace:WaitForChild(legacymap.Name):GetChildren()) do
+				if c.Name == "Bone" and c:IsA("BasePart") then
+					local oldcframe = char.PrimaryPart.CFrame
+					task.wait()
+
+					char.PrimaryPart.CFrame = c.CFrame
+
+					local la = c.Position + Vector3.new(0, 1.5, 0)
+					camera.CameraType = Enum.CameraType.Scriptable
+					camera.CFrame = CFrame.new(camera.CFrame.Position, la)
+
+					local proximity = c:FindFirstChild("ProximityPrompt")
+					if proximity and proximity:IsA("ProximityPrompt") then
+						repeat
+							proximity:InputHoldBegin()
+							wait(proximity.HoldDuration)
+							proximity:InputHoldEnd()
+							task.wait(0.1)
+						until not game.Workspace:FindFirstChild(legacymap.Name):FindFirstChild("Bone")
+					end
+
+					task.wait()
+					Rayfield:Notify({
+						Title = "Auto-play",
+						Content = "Succesfully collected bone!",
+						Duration = 2,
+						Image = 4483362458,
+						Actions = { -- Notification Buttons
+							Ignore = {
+								Name = "Close",
+								Callback = function()
+
+								end
+							},
+						},
+					})
+					char.PrimaryPart.CFrame = oldcframe
+					camera.CameraType = Enum.CameraType.Custom
+				end
 			end
 		end
 	end,
@@ -315,35 +387,68 @@ local Button = MainTab:CreateButton({
 local Button = MainTab:CreateButton({
 	Name = "Auto-highlight ghost room (Run before start)",
 	Callback = function()
-		workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
-			local base = c:WaitForChild("Base")
-			if base:IsA("BasePart") then
-				local part = Instance.new("Part")
-				part.Name = "GhostRoom"
-				part.Transparency = 1
-				part.Anchored = true
-				part.CFrame = base.CFrame
-				part.CanCollide = false
-				part.Size = Vector3.new(4, 1, 1)
+		if workspace:FindFirstChild("NPCs") then
+			workspace:WaitForChild("NPCs").ChildAdded:Connect(function(c)
+				local base = c:WaitForChild("Base")
+				if base:IsA("BasePart") then
+					local part = Instance.new("Part")
+					part.Name = "GhostRoom"
+					part.Transparency = 1
+					part.Anchored = true
+					part.CFrame = base.CFrame
+					part.CanCollide = false
+					part.Size = Vector3.new(4, 1, 1)
 
-				local bg = Instance.new("BillboardGui")
-				bg.AlwaysOnTop = true
-				bg.Adornee = part
-				bg.Size = UDim2.new(4, 0, 1, 0)
-				bg.Parent = part
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = part
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = part
 
-				local tl = Instance.new("TextLabel")
-				tl.TextScaled = true
-				tl.Size = UDim2.new(1, 0, 1, 0)
-				tl.TextColor3 = Color3.fromRGB(255, 0, 0)
-				tl.TextStrokeTransparency = 0
-				tl.BackgroundTransparency = 1
-				tl.Text = "Ghost Room"
-				tl.Parent = bg
-				task.wait()
-				part.Parent = workspace
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.TextColor3 = Color3.fromRGB(255, 0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1
+					tl.Text = "Ghost Room"
+					tl.Parent = bg
+					task.wait()
+					part.Parent = workspace
+				end
+			end)
+		else
+			local c = workspace:WaitForChild("GhostModel")
+			if c:FindFirstChild("Base") then
+				local base = c:WaitForChild("Base")
+				if base:IsA("BasePart") then
+					local part = Instance.new("Part")
+					part.Name = "GhostRoom"
+					part.Transparency = 1
+					part.Anchored = true
+					part.CFrame = base.CFrame
+					part.CanCollide = false
+					part.Size = Vector3.new(4, 1, 1)
+
+					local bg = Instance.new("BillboardGui")
+					bg.AlwaysOnTop = true
+					bg.Adornee = part
+					bg.Size = UDim2.new(4, 0, 1, 0)
+					bg.Parent = part
+
+					local tl = Instance.new("TextLabel")
+					tl.TextScaled = true
+					tl.Size = UDim2.new(1, 0, 1, 0)
+					tl.TextColor3 = Color3.fromRGB(255, 0, 0)
+					tl.TextStrokeTransparency = 0
+					tl.BackgroundTransparency = 1
+					tl.Text = "Ghost Room"
+					tl.Parent = bg
+					task.wait()
+					part.Parent = workspace
+				end
 			end
-		end)
+		end
 	end,
 })
 
