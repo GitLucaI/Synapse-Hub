@@ -129,7 +129,7 @@ local Button = MainTab:CreateButton({
 					Image = 4483362458,
 					Actions = { -- Notification Buttons
 						Ignore = {
-							Name = "Okay!",
+							Name = "Close",
 							Callback = function()
 
 							end
@@ -199,7 +199,7 @@ local Button = MainTab:CreateButton({
 					Image = 4483362458,
 					Actions = { -- Notification Buttons
 						Ignore = {
-							Name = "Okay!",
+							Name = "Close",
 							Callback = function()
 								
 							end
@@ -247,7 +247,7 @@ local Button = MainTab:CreateButton({
 							Image = 4483362458,
 							Actions = { -- Notification Buttons
 								Ignore = {
-									Name = "Okay!",
+									Name = "Close",
 									Callback = function()
 
 									end
@@ -291,7 +291,7 @@ local Button = MainTab:CreateButton({
 							Image = 4483362458,
 							Actions = { -- Notification Buttons
 								Ignore = {
-									Name = "Okay!",
+									Name = "Close",
 									Callback = function()
 
 									end
@@ -372,13 +372,14 @@ local Section = MainTab:CreateSection("Automation")
 
 
 local Button = MainTab:CreateButton({
-	Name = "Auto-collect bone (Recommended run before start)",
+	Name = "Auto-collect bone",
 	Callback = function()
 
 		for _, c in pairs(game.Workspace:WaitForChild("Map"):GetChildren()) do
 			if c.Name == "Bone" and c:IsA("BasePart") then
 				local oldcframe = char.PrimaryPart.CFrame
 				task.wait()
+
 				char.PrimaryPart.CFrame = c.CFrame
 
 				local la = c.Position + Vector3.new(0, 1.5, 0)
@@ -403,7 +404,7 @@ local Button = MainTab:CreateButton({
 					Image = 4483362458,
 					Actions = { -- Notification Buttons
 						Ignore = {
-							Name = "Okay!",
+							Name = "Close",
 							Callback = function()
 
 							end
