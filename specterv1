@@ -124,7 +124,7 @@ local Button = MainTab:CreateButton({
 				Rayfield:Notify({
 					Title = "Spawner",
 					Content = "Fingerprint has spawned!",
-					Duration = 6.5,
+					Duration = 2,
 					Image = 4483362458,
 					Actions = { -- Notification Buttons
 						Ignore = {
@@ -194,7 +194,7 @@ local Button = MainTab:CreateButton({
 				Rayfield:Notify({
 					Title = "Spawner",
 					Content = "Orb has spawned!",
-					Duration = 6.5,
+					Duration = 2,
 					Image = 4483362458,
 					Actions = { -- Notification Buttons
 						Ignore = {
@@ -236,6 +236,27 @@ local Button = MainTab:CreateButton({
 	Callback = function()
 		for _, c in pairs(workspace:WaitForChild("NPCs"):GetChildren()) do
 			if not c:FindFirstChild("ESP") then
+				c:FindFirstChild("Base").Changed:Connect(function()
+					local base = c:FindFirstChild("Base")
+					if base:IsA("BasePart") then
+						if base.Transparency == 0 then
+							Rayfield:Notify({
+								Title = "Spawner",
+								Content = "Hunt has begun!",
+								Duration = 2,
+								Image = 4483362458,
+								Actions = { -- Notification Buttons
+									Ignore = {
+										Name = "Okay!",
+										Callback = function()
+
+										end
+									},
+								},
+							})
+						end
+					end
+				end)
 				local ESP = Instance.new("Highlight")
 				ESP.FillColor = Color3.new(0.392157, 0.0392157, 0)
 				ESP.Name = "ESP"
