@@ -1,0 +1,12 @@
+last sessions 🟢
+ - game name
+ - game jobid
+ - join server button
+
+join with link 🟡
+ - create link
+ - join with link
+ - link example: "hub.synapse.v1/joingame/id/jobid/ownerid"
+
+player count in server, max 🔴
+ - progress bar
