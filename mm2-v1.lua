@@ -1,3 +1,4 @@
+local camera = game.Workspace.CurrentCamera
 local channel = game:GetService("TextChatService"):WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
@@ -48,14 +49,24 @@ local Window = Rayfield:CreateWindow({
 
 function createBillboard(texts, adornee, bname)
 	local billboard = Instance.new("BillboardGui")
-	local text = Instance.new("TextLabel")
-	text.Parent = billboard
-	text.Size = UDim2.new(1,0,1,0)
-	text.Text = texts
-	billboard.Adornee = adornee
+	billboard.Size = UDim2.new(0, 50, 0, 20)
+	billboard.StudsOffset = Vector3.new(0, 0, 0)
+	billboard.AlwaysOnTop = true
 	billboard.Name = bname
+	billboard.Adornee = adornee
 	billboard.Parent = ESPFolder
+
+	local text = Instance.new("TextLabel")
+	text.Size = UDim2.new(1, 0, 1, 0)
+	text.BackgroundTransparency = 1
+	text.TextScaled = true
+	text.TextColor3 = Color3.new(1, 1, 1)
+	text.TextStrokeTransparency = 0
+	text.Font = Enum.Font.SourceSansBold
+	text.Text = texts
+	text.Parent = billboard
 end
+
 
 local MainTab = Window:CreateTab("Main", 4483362458)
 
@@ -68,6 +79,7 @@ local hg = Instance.new("BoolValue", script)
 local notify = Instance.new("BoolValue", script)
 local tptogundrop = Instance.new("BoolValue", script)
 local cesp = Instance.new("BoolValue", script)
+local murdereraimbot = Instance.new("BoolValue", script)
 
 function notifyr(playerrole, role)
 	if notifiedRoles[playerrole] then return end
@@ -170,6 +182,18 @@ MainTab:CreateToggle({
 		tptogundrop.Value = Value
 	end,
 })
+
+
+MainTab:CreateToggle({
+	Name = "Murderer Aimbot",
+	CurrentValue = false,
+	Flag = "MAimbot", 
+	Callback = function(Value)
+		murdereraimbot.Value = Value
+	end,
+})
+
+
 
 MainTab:CreateButton({
 	Name = "Rejoin",
