@@ -3,7 +3,7 @@ last sessions 🟢
  - game jobid
  - join server button
 
-join with link 🟡
+join with link 🟢
  - create link
  - join with link
  - link example: "hub.synapse.v1/joingame/id/jobid/ownerid"
