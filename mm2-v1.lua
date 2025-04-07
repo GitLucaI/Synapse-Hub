@@ -2,10 +2,9 @@ local channel = game:GetService("TextChatService"):WaitForChild("TextChannels"):
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local ppart = char:WaitForChild("HumanoidRootPart")
-
-local murderer, hero, sheriff
-local notifiedRoles = {}
-
+local ESPFolder = Instance.new("Folder")
+ESPFolder.Name = "ESPFolder"
+ESPFolder.Parent = workspace
 player.CharacterAdded:Connect(function(c)
 	char = c
 	ppart = c:WaitForChild("HumanoidRootPart")
@@ -21,7 +20,6 @@ local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local PlaceId = game.PlaceId
 local JobId = game.JobId
-
 local Window = Rayfield:CreateWindow({
 	Name = "Synapse Hub MM2 ver".. game.PlaceId,
 	LoadingTitle = "Loading interface",
@@ -48,13 +46,28 @@ local Window = Rayfield:CreateWindow({
 	}
 })
 
+function createBillboard(texts, adornee, bname)
+	local billboard = Instance.new("BillboardGui")
+	local text = Instance.new("TextLabel")
+	text.Parent = billboard
+	text.Size = UDim2.new(1,0,1,0)
+	text.Text = texts
+	billboard.Adornee = adornee
+	billboard.Name = bname
+	billboard.Parent = ESPFolder
+end
+
 local MainTab = Window:CreateTab("Main", 4483362458)
+
+local murderer, hero, sheriff
+local notifiedRoles = {}
 
 local snitchroles = Instance.new("BoolValue", script)
 local automwin = Instance.new("BoolValue", script)
 local hg = Instance.new("BoolValue", script)
 local notify = Instance.new("BoolValue", script)
 local tptogundrop = Instance.new("BoolValue", script)
+local cesp = Instance.new("BoolValue", script)
 
 function notifyr(playerrole, role)
 	if notifiedRoles[playerrole] then return end
@@ -91,13 +104,13 @@ function notifyr(playerrole, role)
 			end
 		end
 	end
-	if role == "Sheriff" and playerrole ~= player and hg.Value and murderer ~= player then
+	if role == "Sheriff" and sheriff ~= player and hg.Value and murderer ~= player then
 		local h = player.Character and player.Character:FindFirstChildWhichIsA("Humanoid")
 		if h then h.Health = 0 end
 	end
 end
 
-MainTab:CreateButton({
+local ESP = MainTab:CreateButton({
 	Name = "Player ESP",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/Ihaveash0rtnamefordiscord/Releases/main/MurderMystery2HighlightESP"))()
@@ -141,6 +154,15 @@ MainTab:CreateToggle({
 })
 
 MainTab:CreateToggle({
+	Name = "Coin Esp",
+	CurrentValue = false,
+	Flag = "CESP", 
+	Callback = function(Value)
+		cesp.Value = Value
+	end,
+})
+
+MainTab:CreateToggle({
 	Name = "Get gundrop",
 	CurrentValue = false,
 	Flag = "GrabGunToggle", 
@@ -162,53 +184,64 @@ MainTab:CreateButton({
 	end,
 })
 
-MainTab:CreateButton({
-	Name = "Teleport to Murderer",
-	Callback = function()
-		if murderer and murderer.Character then
-			local hrp = murderer.Character:FindFirstChild("HumanoidRootPart")
-			if hrp then
-				ppart.CFrame = hrp.CFrame
+cesp.Changed:Connect(function()
+	if cesp.Value == true then
+		for _, coin in pairs(workspace:GetDescendants()) do
+			if coin.Name == "CoinVisual" then
+				createBillboard("Coin", coin, "coinesp")
 			end
+		end
+	else
+		for _, coinesp in pairs(ESPFolder:GetChildren()) do
+			if coinesp.Name == "coinesp" then
+				coinesp:Destroy()
+			end
+		end
+	end
+end)
+
+workspace.DescendantAdded:Connect(function(coin)
+	if cesp.Value == true then
+		if coin.Name == "CoinVisual" then
+			createBillboard("Coin", coin, "coinesp")
+		end
+	end
+end)
+
+MainTab:CreateButton({
+	Name = "Teleport to Murderer (Must enable notify)",
+	Callback = function()
+		if murderer and murderer.Character and murderer.Character:FindFirstChild("HumanoidRootPart") then
+			ppart.CFrame = murderer.Character.HumanoidRootPart.CFrame
 		end
 	end,
 })
 
 MainTab:CreateButton({
-	Name = "Teleport to Sheriff",
+	Name = "Teleport to Sheriff (Must enable notify)",
 	Callback = function()
-		if sheriff and sheriff.Character then
-			local hrp = sheriff.Character:FindFirstChild("HumanoidRootPart")
-			if hrp then
-				ppart.CFrame = hrp.CFrame
-			end
+		if sheriff and sheriff.Character and sheriff.Character:FindFirstChild("HumanoidRootPart") then
+			ppart.CFrame = sheriff.Character.HumanoidRootPart.CFrame
 		end
 	end,
 })
 
 MainTab:CreateButton({
-	Name = "Teleport to Hero",
+	Name = "Teleport to Hero (Must enable notify)",
 	Callback = function()
-		if hero and hero.Character then
-			local hrp = hero.Character:FindFirstChild("HumanoidRootPart")
-			if hrp then
-				ppart.CFrame = hrp.CFrame
-			end
+		if hero and hero.Character and hero.Character:FindFirstChild("HumanoidRootPart") then
+			ppart.CFrame = hero.Character.HumanoidRootPart.CFrame
 		end
 	end,
 })
 
 RS.RenderStepped:Connect(function()
 	if not notify.Value then return end
-	local success, rs = pcall(function()
-		return RPS:FindFirstChild("GetPlayerData", true):InvokeServer()
-	end)
-	if success and rs then
-		for i, v in pairs(rs) do
-			local p = Players:FindFirstChild(i)
-			if p and (v.Role == "Murderer" or v.Role == "Sheriff" or v.Role == "Hero") then
-				notifyr(p, v.Role)
-			end
+	local rs = RPS:FindFirstChild("GetPlayerData", true):InvokeServer()
+	for i, v in pairs(rs) do
+		local p = Players:FindFirstChild(i)
+		if p and (v.Role == "Murderer" or v.Role == "Sheriff" or v.Role == "Hero") then
+			notifyr(p, v.Role)
 		end
 	end
 end)
