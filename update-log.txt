@@ -6,4 +6,4 @@ Synapse Hub 1.0.0
 [!] Fixed unknown symbols error in bootstrapper
 [+] Added last sessions menu
 [+] Added join user in the global chat menu
-[*] Parties WIP
+[+] Updated party system # Now you can create, leave and join parties with their unique ID's (You will be also able to copy party link invites)
