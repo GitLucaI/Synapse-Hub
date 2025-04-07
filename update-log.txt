@@ -1,8 +1,9 @@
 Synapse Hub 1.0.0
 
 [!] Changed version system # x(updates).x(features).x(hotfixes)
-
 [!] Fixed ZIndex issues with introduction on internal ui
 [!] Fixed file logger issues
-[+] Added last sessions menu # Shows session game name, server jobid, server rejoin
 [!] Fixed unknown symbols error in bootstrapper
+[+] Added last sessions menu
+[+] Added join user in the global chat menu
+[*] Parties WIP
