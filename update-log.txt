@@ -1,5 +1,6 @@
 Synapse Hub 1.0.0
 
+- Main Hub:
 [!] Changed version system # x(updates).x(features).x(hotfixes)
 [!] Fixed ZIndex issues with introduction on internal ui
 [!] Fixed file logger issues
@@ -8,6 +9,8 @@ Synapse Hub 1.0.0
 [+] Added join user in the global chat menu
 [+] Updated party system # Now you can create, leave and join parties with their unique ID's (You will be also able to copy party link invites)
 [+] Added default hub menu cheats
+
+- Default Cheat Hub:
 [+] DEFAULT: Rejoin server
 [+] DEFAULT: No lag
 [+] DEFAULT: Xray
