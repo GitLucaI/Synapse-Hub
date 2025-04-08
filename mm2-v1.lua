@@ -123,6 +123,7 @@ function notifyr(p, role)
 	
 	if p ~= player and role ~= "Innocent" then
 		if role == "Murderer" and murderer == nil then
+			print(p, ",", role) 
 			Rayfield:Notify({
 				Title = "Roles",
 				Content = p.Name .. " is the " .. role .. "!",
@@ -130,6 +131,7 @@ function notifyr(p, role)
 				Image = "rewind",
 			})
 		elseif role == "Sheriff" and sheriff == nil then
+			print(p, ",", role) 
 			Rayfield:Notify({
 				Title = "Roles",
 				Content = p.Name .. " is the " .. role .. "!",
@@ -137,6 +139,7 @@ function notifyr(p, role)
 				Image = "rewind",
 			})
 		elseif role == "Hero" and hero == nil then
+			print(p, ",", role) 
 			Rayfield:Notify({
 				Title = "Roles",
 				Content = p.Name .. " is the " .. role .. "!",
@@ -153,12 +156,12 @@ function notifyr(p, role)
 		local primarypartk = char:FindFirstChild("HumanoidRootPart")
 		for _, playerv in pairs(Players:GetPlayers()) do
 			if playerv ~= player then
-				local c = playerv.Character
-				if c and c:FindFirstChild("HumanoidRootPart") and c:FindFirstChildWhichIsA("Humanoid") then
+				if playerv.Character and playerv.Character:FindFirstChild("HumanoidRootPart") and playerv.Character:FindFirstChildWhichIsA("Humanoid") then
 					repeat
+						local c = playerv.Character
 						primarypartk.CFrame = c.HumanoidRootPart.CFrame
 						task.wait()
-					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
+					until playerv.Character:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
 				end
 			end
 		end
@@ -166,10 +169,10 @@ function notifyr(p, role)
 	task.wait()
 	if role == "Murderer" then 
 		murderer = p 
-		print(p, ",", role) 
 		if murderer:IsA("Player") then
-			local mc = murderer.Character
-			if mc then
+			
+			if murderer.Character then
+				local mc = murderer.Character
 				local hum = mc:FindFirstChildWhichIsA("Humanoid")
 				if hum then
 					hum.Died:Connect(function()
@@ -181,10 +184,9 @@ function notifyr(p, role)
 	end
 	if role == "Sheriff" then 
 		sheriff = p 
-		print(p, ",", role)
 		if sheriff:IsA("Player") then
-			local mc = murderer.Character
-			if mc then
+			if sheriff.Character then
+				local mc = murderer.Character
 				local hum = mc:FindFirstChildWhichIsA("Humanoid")
 				if hum then
 					hum.Died:Connect(function()
@@ -195,11 +197,12 @@ function notifyr(p, role)
 		end
 	end
 	if role == "Hero" then 
+		
 		hero = p 
-		print(p, ",", role) 
 		if hero:IsA("Player") then
 			local mc = murderer.Character
-			if mc then
+			if hero.Character then
+				local mc = murderer.Character
 				local hum = mc:FindFirstChildWhichIsA("Humanoid")
 				if hum then
 					hum.Died:Connect(function()
@@ -209,8 +212,7 @@ function notifyr(p, role)
 			end
 		end
 	end
-	if role == "Innocent" then 
-		print(p, ",", role) 
+	if role == "Innocent" then
 	end
 	
 	if role == "Sheriff" and hg.Value and murderer ~= player then
