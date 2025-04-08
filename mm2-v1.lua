@@ -117,13 +117,12 @@ RS.RenderStepped:Connect(function()
 end)
 
 function notifyr(p, role)
-	if not p or notifiedRoles[p] then return end
+	if not p or not p.Character or notifiedRoles[p] then return end
 	notifiedRoles[p] = true
-	
-	
+
 	if p ~= player and role ~= "Innocent" then
 		if role == "Murderer" and murderer == nil then
-			print(p, ",", role) 
+			print(p, ",", role)
 			Rayfield:Notify({
 				Title = "Roles",
 				Content = p.Name .. " is the " .. role .. "!",
@@ -131,7 +130,7 @@ function notifyr(p, role)
 				Image = "rewind",
 			})
 		elseif role == "Sheriff" and sheriff == nil then
-			print(p, ",", role) 
+			print(p, ",", role)
 			Rayfield:Notify({
 				Title = "Roles",
 				Content = p.Name .. " is the " .. role .. "!",
@@ -151,7 +150,7 @@ function notifyr(p, role)
 			channel:SendAsync(p.Name .. " is the " .. role .. "!", "All")
 		end
 	end
-	
+
 	if automwin.Value and p == player and role == "Murderer" and char then
 		local primarypartk = char:FindFirstChild("HumanoidRootPart")
 		for _, playerv in pairs(Players:GetPlayers()) do
@@ -167,8 +166,9 @@ function notifyr(p, role)
 		end
 	end
 	task.wait()
-	if role == "Murderer" then 
-		murderer = p 
+
+	if role == "Murderer" then
+		murderer = p
 		if murderer:IsA("Player") then
 			local mc = murderer.Character
 			if mc then
@@ -181,10 +181,10 @@ function notifyr(p, role)
 			end
 		end
 	end
-	if role == "Sheriff" then 
-		sheriff = p 
+	if role == "Sheriff" then
+		sheriff = p
 		if sheriff:IsA("Player") then
-			local mc = murderer.Character
+			local mc = sheriff.Character
 			if mc then
 				local hum = mc:FindFirstChildWhichIsA("Humanoid")
 				if hum then
@@ -195,10 +195,10 @@ function notifyr(p, role)
 			end
 		end
 	end
-	if role == "Hero" then 
-		hero = p 
+	if role == "Hero" then
+		hero = p
 		if hero:IsA("Player") then
-			local mc = murderer.Character
+			local mc = hero.Character
 			if mc then
 				local hum = mc:FindFirstChildWhichIsA("Humanoid")
 				if hum then
@@ -211,12 +211,14 @@ function notifyr(p, role)
 	end
 	if role == "Innocent" then
 	end
-	
+
 	if role == "Sheriff" and hg.Value and murderer ~= player then
 		local h = player.Character and player.Character:FindFirstChildWhichIsA("Humanoid")
 		if h then h.Health = 0 end
 	end
 end
+
+
 
 
 local ESP = MainTab:CreateButton({
