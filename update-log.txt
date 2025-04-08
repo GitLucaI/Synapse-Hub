@@ -8,6 +8,7 @@ Synapse Hub 1.0.0
 [+] Added last sessions menu
 [+] Added join user in the global chat menu
 [+] Updated party system # Now you can create, leave and join parties with their unique ID's (You will be also able to copy party link invites)
+[+] Added notification functions
 [+] Added default hub menu cheats
 
 - Default Cheat Hub:
