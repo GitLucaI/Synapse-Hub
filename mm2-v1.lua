@@ -1,4 +1,4 @@
-local camera = game.Workspace.CurrentCamera
+local camera = workspace.CurrentCamera
 local channel = game:GetService("TextChatService"):WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
@@ -6,6 +6,19 @@ local ppart = char:WaitForChild("HumanoidRootPart")
 local ESPFolder = Instance.new("Folder")
 ESPFolder.Name = "ESPFolder"
 ESPFolder.Parent = workspace
+
+local Players = game:GetService("Players")
+local RPS = game:GetService("ReplicatedStorage")
+local RS = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
+local PlaceId = game.PlaceId
+local JobId = game.JobId
+
+local murderer, sheriff, hero
+local notifiedRoles = {}
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local humanoid = char:FindFirstChildWhichIsA("Humanoid")
 player.CharacterAdded:Connect(function(c)
 	char = c
 	ppart = c:WaitForChild("HumanoidRootPart")
@@ -13,34 +26,28 @@ player.CharacterAdded:Connect(function(c)
 	notifiedRoles = {}
 end)
 
-local humanoid = char:FindFirstChildWhichIsA("Humanoid")
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-local RPS = game:GetService("ReplicatedStorage")
-local RS = game:GetService("RunService")
-local TeleportService = game:GetService("TeleportService")
-local Players = game:GetService("Players")
-local PlaceId = game.PlaceId
-local JobId = game.JobId
+
+
 local Window = Rayfield:CreateWindow({
 	Name = "Synapse Hub MM2 ver".. game.PlaceId,
 	LoadingTitle = "Loading interface",
 	LoadingSubtitle = "by Synapse",
 	ConfigurationSaving = {
 		Enabled = true,
-		FolderName = nil, 
+		FolderName = nil,
 		FileName = "Synapse Hub MM2 ver".. game.PlaceId
 	},
 	Discord = {
 		Enabled = true,
 		Invite = "vMbNSSa9TN",
-		RememberJoins = true 
+		RememberJoins = true
 	},
 	KeySystem = false,
 	KeySettings = {
 		Title = "Untitled",
 		Subtitle = "Key System",
 		Note = "No method of obtaining the key is provided",
-		FileName = "Key", 
+		FileName = "Key",
 		SaveKey = true,
 		GrabKeyFromSite = false,
 		Key = {"Hello"}
@@ -67,11 +74,7 @@ function createBillboard(texts, adornee, bname)
 	text.Parent = billboard
 end
 
-
 local MainTab = Window:CreateTab("Main", 4483362458)
-
-local murderer, hero, sheriff
-local notifiedRoles = {}
 
 local snitchroles = Instance.new("BoolValue", script)
 local automwin = Instance.new("BoolValue", script)
@@ -80,47 +83,142 @@ local notify = Instance.new("BoolValue", script)
 local tptogundrop = Instance.new("BoolValue", script)
 local cesp = Instance.new("BoolValue", script)
 local murdereraimbot = Instance.new("BoolValue", script)
+local sheriffaimbot = Instance.new("BoolValue", script)
+local noclip = Instance.new("BoolValue", script)
+local antifling = Instance.new("BoolValue", script)
 
-function notifyr(playerrole, role)
-	if notifiedRoles[playerrole] then return end
-	notifiedRoles[playerrole] = true
-	if role == "Murderer" then
-		murderer = playerrole
-	elseif role == "Sheriff" then
-		sheriff = playerrole
-	elseif role == "Hero" then
-		hero = playerrole
+RS.RenderStepped:Connect(function()
+	if murdereraimbot.Value and murderer and murderer.Character and murderer.Character:FindFirstChild("HumanoidRootPart") then
+		camera.CFrame = CFrame.new(camera.CFrame.Position, murderer.Character.HumanoidRootPart.Position)
 	end
-	if playerrole ~= player then
-		Rayfield:Notify({
-			Title = "Roles",
-			Content = playerrole.Name .. " is the " .. role .. "!",
-			Duration = 3.5,
-			Image = "rewind",
-		})
-		if snitchroles.Value then
-			channel:SendAsync(playerrole.Name .. " is the " .. role .. "!", "All")
+	if sheriffaimbot.Value then
+		if sheriff and sheriff.Character and sheriff.Character:FindFirstChild("HumanoidRootPart") then
+			camera.CFrame = CFrame.new(camera.CFrame.Position, sheriff.Character.HumanoidRootPart.Position)
+		elseif hero and hero.Character and hero.Character:FindFirstChild("HumanoidRootPart") then
+			camera.CFrame = CFrame.new(camera.CFrame.Position, hero.Character.HumanoidRootPart.Position)
 		end
 	end
-	if automwin.Value and playerrole == player and role == "Murderer" and char then
-		local primarypartk = char.PrimaryPart
-		for _, playerv in pairs(Players:GetPlayers()) do
-			if playerv ~= player then
-				local c = playerv.Character
-				if c and c:FindFirstChild("HumanoidRootPart") then
-					repeat
-						primarypartk.CFrame = c.HumanoidRootPart.CFrame
-						task.wait()
-					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0
+	if char then
+		for _, part in pairs(char:GetChildren()) do
+			if part:IsA("BasePart") and part.Name == "HumanoidRootPart" or part.Name == "Torso" or part.Name == "LowerTorso" or part.Name == "UpperTorso" then
+				part.CanCollide = not noclip.Value
+			end
+		end
+	end
+	for _, prplayer in pairs(Players:GetPlayers()) do
+		if prplayer ~= player and prplayer.Character then
+			for _, part in pairs(prplayer.Character:GetChildren()) do
+				if part:IsA("BasePart") and part.Name == "HumanoidRootPart" or part.Name == "Torso" or part.Name == "LowerTorso" or part.Name == "UpperTorso" then
+					part.CanCollide = not antifling.Value
 				end
 			end
 		end
 	end
-	if role == "Sheriff" and sheriff ~= player and hg.Value and murderer ~= player then
+end)
+
+function notifyr(p, role)
+	if not p or notifiedRoles[p] then return end
+	notifiedRoles[p] = true
+	
+	
+	if p ~= player and role ~= "Innocent" then
+		if role == "Murderer" and murderer == nil then
+			Rayfield:Notify({
+				Title = "Roles",
+				Content = p.Name .. " is the " .. role .. "!",
+				Duration = 3.5,
+				Image = "rewind",
+			})
+		elseif role == "Sheriff" and sheriff == nil then
+			Rayfield:Notify({
+				Title = "Roles",
+				Content = p.Name .. " is the " .. role .. "!",
+				Duration = 3.5,
+				Image = "rewind",
+			})
+		elseif role == "Hero" and hero == nil then
+			Rayfield:Notify({
+				Title = "Roles",
+				Content = p.Name .. " is the " .. role .. "!",
+				Duration = 3.5,
+				Image = "rewind",
+			})
+		end
+		if snitchroles.Value then
+			channel:SendAsync(p.Name .. " is the " .. role .. "!", "All")
+		end
+	end
+	
+	if automwin.Value and p == player and role == "Murderer" and char then
+		local primarypartk = char:FindFirstChild("HumanoidRootPart")
+		for _, playerv in pairs(Players:GetPlayers()) do
+			if playerv ~= player then
+				local c = playerv.Character
+				if c and c:FindFirstChild("HumanoidRootPart") and c:FindFirstChildWhichIsA("Humanoid") then
+					repeat
+						primarypartk.CFrame = c.HumanoidRootPart.CFrame
+						task.wait()
+					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
+				end
+			end
+		end
+	end
+	task.wait()
+	if role == "Murderer" then 
+		murderer = p 
+		print(p, ",", role) 
+		if murderer:IsA("Player") then
+			local mc = murderer.Character
+			if mc then
+				local hum = mc:FindFirstChildWhichIsA("Humanoid")
+				if hum then
+					hum.Died:Connect(function()
+						murderer = nil
+					end)
+				end
+			end
+		end
+	end
+	if role == "Sheriff" then 
+		sheriff = p 
+		print(p, ",", role)
+		if sheriff:IsA("Player") then
+			local mc = murderer.Character
+			if mc then
+				local hum = mc:FindFirstChildWhichIsA("Humanoid")
+				if hum then
+					hum.Died:Connect(function()
+						sheriff = nil
+					end)
+				end
+			end
+		end
+	end
+	if role == "Hero" then 
+		hero = p 
+		print(p, ",", role) 
+		if hero:IsA("Player") then
+			local mc = murderer.Character
+			if mc then
+				local hum = mc:FindFirstChildWhichIsA("Humanoid")
+				if hum then
+					hum.Died:Connect(function()
+						hero = nil
+					end)
+				end
+			end
+		end
+	end
+	if role == "Innocent" then 
+		print(p, ",", role) 
+	end
+	
+	if role == "Sheriff" and hg.Value and murderer ~= player then
 		local h = player.Character and player.Character:FindFirstChildWhichIsA("Humanoid")
 		if h then h.Health = 0 end
 	end
 end
+
 
 local ESP = MainTab:CreateButton({
 	Name = "Player ESP",
@@ -129,72 +227,16 @@ local ESP = MainTab:CreateButton({
 	end,
 })
 
-MainTab:CreateToggle({
-	Name = "Notify Roles",
-	CurrentValue = false,
-	Flag = "NotifyToggle", 
-	Callback = function(Value)
-		notify.Value = Value
-	end,
-})
-
-MainTab:CreateToggle({
-	Name = "Snitch roles",
-	CurrentValue = false,
-	Flag = "SnitchRoles", 
-	Callback = function(Value)
-		snitchroles.Value = Value
-	end,
-})
-
-MainTab:CreateToggle({
-	Name = "Auto murderer win",
-	CurrentValue = false,
-	Flag = "AutoMWin", 
-	Callback = function(Value)
-		automwin.Value = Value
-	end,
-})
-
-MainTab:CreateToggle({
-	Name = "Hero Godmode (Kills You)",
-	CurrentValue = false,
-	Flag = "HG", 
-	Callback = function(Value)
-		hg.Value = Value
-	end,
-})
-
-MainTab:CreateToggle({
-	Name = "Coin Esp",
-	CurrentValue = false,
-	Flag = "CESP", 
-	Callback = function(Value)
-		cesp.Value = Value
-	end,
-})
-
-MainTab:CreateToggle({
-	Name = "Get gundrop",
-	CurrentValue = false,
-	Flag = "GrabGunToggle", 
-	Callback = function(Value)
-		tptogundrop.Value = Value
-	end,
-})
-
-
-MainTab:CreateToggle({
-	Name = "Murderer Aimbot",
-	CurrentValue = false,
-	Flag = "MAimbot", 
-	Callback = function(Value)
-		murdereraimbot.Value = Value
-	end,
-})
-
-
-
+MainTab:CreateToggle({ Name = "Notify Roles", CurrentValue = false, Flag = "NotifyToggle", Callback = function(Value) notify.Value = Value end })
+MainTab:CreateToggle({ Name = "Snitch roles", CurrentValue = false, Flag = "SnitchRoles", Callback = function(Value) snitchroles.Value = Value end })
+MainTab:CreateToggle({ Name = "Auto murderer win (Soon)", CurrentValue = false, Flag = "AutoMWin", Callback = function(Value) automwin.Value = Value end })
+MainTab:CreateToggle({ Name = "Hero Godmode (Kills You)", CurrentValue = false, Flag = "HG", Callback = function(Value) hg.Value = Value end })
+MainTab:CreateToggle({ Name = "Coin Esp", CurrentValue = false, Flag = "CESP", Callback = function(Value) cesp.Value = Value end })
+MainTab:CreateToggle({ Name = "Get gundrop", CurrentValue = false, Flag = "GrabGunToggle", Callback = function(Value) tptogundrop.Value = Value end })
+MainTab:CreateToggle({ Name = "Murderer Aimbot (Must enable notify)", CurrentValue = false, Flag = "MAimbot", Callback = function(Value) murdereraimbot.Value = Value end })
+MainTab:CreateToggle({ Name = "Sheriff Aimbot (Must enable notify)", CurrentValue = false, Flag = "SAimbot", Callback = function(Value) sheriffaimbot.Value = Value end })
+MainTab:CreateToggle({ Name = "Noclip", CurrentValue = false, Flag = "Noclip", Callback = function(Value) noclip.Value = Value end })
+MainTab:CreateToggle({ Name = "AntiFling", CurrentValue = false, Flag = "AntiFling", Callback = function(Value) antifling.Value = Value end })
 MainTab:CreateButton({
 	Name = "Rejoin",
 	Callback = function()
@@ -209,7 +251,7 @@ MainTab:CreateButton({
 })
 
 cesp.Changed:Connect(function()
-	if cesp.Value == true then
+	if cesp.Value then
 		for _, coin in pairs(workspace:GetDescendants()) do
 			if coin.Name == "CoinVisual" then
 				createBillboard("Coin", coin, "coinesp")
@@ -225,10 +267,8 @@ cesp.Changed:Connect(function()
 end)
 
 workspace.DescendantAdded:Connect(function(coin)
-	if cesp.Value == true then
-		if coin.Name == "CoinVisual" then
-			createBillboard("Coin", coin, "coinesp")
-		end
+	if cesp.Value and coin.Name == "CoinVisual" then
+		createBillboard("Coin", coin, "coinesp")
 	end
 end)
 
@@ -259,18 +299,28 @@ MainTab:CreateButton({
 	end,
 })
 
-RS.RenderStepped:Connect(function()
+
+
+local function sr()
 	if not notify.Value then return end
-	local rs = RPS:FindFirstChild("GetPlayerData", true):InvokeServer()
-	for i, v in pairs(rs) do
-		local p = Players:FindFirstChild(i)
-		if p and (v.Role == "Murderer" or v.Role == "Sheriff" or v.Role == "Hero") then
-			notifyr(p, v.Role)
+	local success, rs = pcall(function()
+		return RPS:FindFirstChild("GetPlayerData", true):InvokeServer()
+	end)
+	if success then
+		for name, data in pairs(rs) do
+			local p = Players:FindFirstChild(name)
+			if p and data and (data.Role == "Murderer" or data.Role == "Sheriff" or data.Role == "Hero" or data.Role == "Innocent") then
+				if not notifiedRoles[p] then
+					notifyr(p, data.Role)
+				end
+			end
 		end
 	end
-end)
+end
 
-game.Workspace.DescendantAdded:Connect(function(d)
+RS.RenderStepped:Connect(sr)
+
+workspace.DescendantAdded:Connect(function(d)
 	if d.Name == "GunDrop" and tptogundrop.Value and d:IsA("Part") then
 		task.wait(0.1)
 		local oldcf = char.PrimaryPart.CFrame
