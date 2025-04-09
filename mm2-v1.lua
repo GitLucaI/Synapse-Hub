@@ -300,7 +300,12 @@ MainTab:CreateButton({
 	end,
 })
 
-
+local Button = MainTab:CreateButton({
+	Name = "Enable FreeCam (Shift + P)",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GitLucaI/Synapse-Hub/refs/heads/main/freecam"))()
+	end,
+})
 
 local function sr()
 	if not notify.Value then return end
