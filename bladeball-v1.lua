@@ -15,6 +15,8 @@ local JobId = game.JobId
 local autoparry = Instance.new("BoolValue", script)
 local zone
 
+local dzc = Color3.new(255, 255, 255)
+local pdzc = Color3.new(255, 0, 0)
 local function cz()
 	if zone then zone:Destroy() end
 	zone = Instance.new("Part")
@@ -24,7 +26,7 @@ local function cz()
 	zone.CanCollide = false
 	zone.Shape = Enum.PartType.Ball
 	zone.Material = Enum.Material.ForceField
-	zone.Color = Color3.fromRGB(255, 0, 0)
+	zone.Color = Color3.fromRGB(255, 255, 255)
 	zone.Name = "DetectionZone"
 	zone.Parent = workspace
 end
@@ -32,11 +34,17 @@ end
 local function check()
 	for _, obj in pairs(workspace.Balls:GetDescendants()) do
 		if obj:IsA("BasePart") and (obj.Position - hrp.Position).Magnitude <= 35 and obj.Color == Color3.fromRGB(255, 30, 30) then
+			if workspace:FindFirstChild("DetectionZone") and pdzc then
+				workspace:FindFirstChild("DetectionZone").Color = pdzc
+			end
 			repeat
 				vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
 				task.wait(0.1)
 				vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
 			until obj.Color ~= Color3.fromRGB(255, 30, 30) or hum.Health == 0
+			if workspace:FindFirstChild("DetectionZone") and dzc then
+				workspace:FindFirstChild("DetectionZone").Color = dzc
+			end
 		end
 	end
 end
@@ -59,6 +67,9 @@ end
 RS.RenderStepped:Connect(function()
 	if hrp and hrp.Parent and zone then
 		zone.CFrame = hrp.CFrame
+	end
+	if workspace:FindFirstChild("DetectionZone") and dzc then
+		workspace:FindFirstChild("DetectionZone").Color = dzc
 	end
 end)
 
@@ -116,3 +127,22 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("Main", 4483362458)
 
 MainTab:CreateToggle({ Name = "Auto Parry", CurrentValue = false, Flag = "AP", Callback = function(Value) autoparry.Value = Value end })
+
+local ColorPicker = MainTab:CreateColorPicker({
+	Name = "Normal Color",
+	Color = Color3.fromRGB(255,255,255),
+	Flag = "ColorPicker1", 
+	Callback = function(Value)
+		dzc = Value
+	end
+})
+
+local ColorPicker = MainTab:CreateColorPicker({
+	Name = "Parrying Color",
+	Color = Color3.fromRGB(255,0,0),
+	Flag = "ColorPicker1", 
+	Callback = function(Value)
+		pdzc = Value
+	end
+})
+
