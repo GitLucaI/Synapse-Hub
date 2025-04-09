@@ -337,15 +337,13 @@ RS.RenderStepped:Connect(sr)
 RS.RenderStepped:Connect(function()
 	if murdereraimbot.Value and murderer and murderer.Character then
 		local mc = murderer.Character
-		local tp = mc:FindFirstChild("Torso") or mc:FindFirstChild("LowerTorso") or mc:FindFirstChild("UpperTorso") or mc:FindFirstChild("HumanoidRootPart")
-
-		if tp then
-			local ro = camera.CFrame.Position
-			local rd = (tp.Position - ro).unit * 500
-
+		local ro = camera.CFrame.Position
+		local ap = mc:FindFirstChild("HumanoidRootPart") or mc:FindFirstChildWhichIsA("BasePart")
+		if ap then
+			local rd = (ap.Position - ro).Unit * 500
 			local rr = workspace:Raycast(ro, rd)
 
-			if rr and rr.Instance == tp then
+			if rr and rr.Instance and rr.Instance:IsDescendantOf(mc) then
 				vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
 				task.wait(0.1)
 				vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
@@ -353,6 +351,7 @@ RS.RenderStepped:Connect(function()
 		end
 	end
 end)
+
 
 workspace.DescendantAdded:Connect(function(d)
 	if d.Name == "GunDrop" and tptogundrop.Value and d:IsA("Part") then
