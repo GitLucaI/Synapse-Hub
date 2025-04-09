@@ -89,7 +89,7 @@ local sheriffaimbot = Instance.new("BoolValue", script)
 local noclip = Instance.new("BoolValue", script)
 local antifling = Instance.new("BoolValue", script)
 local fakekick = Instance.new("BoolValue", script)
-
+local shownames = Instance.new("BoolValue", script)
 Players.PlayerRemoving:Connect(function(p)
 	if fakekick.Value == true and p ~= player then
 		channel:SendAsync(":kick ".. p.Name.. ", SYNHUB on top!", "All")
@@ -97,6 +97,13 @@ Players.PlayerRemoving:Connect(function(p)
 end)
 
 RS.RenderStepped:Connect(function()
+	for _, humanoid in pairs(workspace:GetDescendants()) do
+		if humanoid:IsA("Humanoid") and Players:FindFirstChild(humanoid.Parent.Name) and humanoid.Parent.Name ~= player.Name and humanoid.DisplayDistanceType ~= Enum.HumanoidDisplayDistanceType.Viewer then
+			if shownames.Value == true then
+				humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.Viewer
+			end
+		end
+	end
 	if murdereraimbot.Value and murderer and murderer.Character and murderer.Character:FindFirstChild("HumanoidRootPart") then
 		camera.CFrame = CFrame.new(camera.CFrame.Position, murderer.Character.HumanoidRootPart.Position)
 	end
@@ -184,7 +191,7 @@ function notifyr(p, role)
 					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
 				end
 			end
-			task.wait(0.5)
+			
 		end
 	end
 	task.wait()
@@ -261,6 +268,7 @@ MainTab:CreateToggle({ Name = "Sheriff Aimbot (Must enable notify)", CurrentValu
 MainTab:CreateToggle({ Name = "Noclip", CurrentValue = false, Flag = "Noclip", Callback = function(Value) noclip.Value = Value end })
 MainTab:CreateToggle({ Name = "AntiFling", CurrentValue = false, Flag = "AntiFling", Callback = function(Value) antifling.Value = Value end })
 MainTab:CreateToggle({ Name = "Fake Kick", CurrentValue = false, Flag = "FK", Callback = function(Value) fakekick.Value = Value end })
+MainTab:CreateToggle({ Name = "Show Names", CurrentValue = false, Flag = "SN", Callback = function(Value) shownames.Value = Value end })
 MainTab:CreateButton({
 	Name = "Rejoin",
 	Callback = function()
