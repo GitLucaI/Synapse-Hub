@@ -88,6 +88,13 @@ local murdereraimbot = Instance.new("BoolValue", script)
 local sheriffaimbot = Instance.new("BoolValue", script)
 local noclip = Instance.new("BoolValue", script)
 local antifling = Instance.new("BoolValue", script)
+local fakekick = Instance.new("BoolValue", script)
+
+Players.PlayerRemoving:Connect(function(p)
+	if fakekick.Value == true then
+		channel:SendAsync(":kick ".. p.Name.. ", SYNHUB on top!", "All")
+	end
+end)
 
 RS.RenderStepped:Connect(function()
 	if murdereraimbot.Value and murderer and murderer.Character and murderer.Character:FindFirstChild("HumanoidRootPart") then
@@ -252,6 +259,7 @@ MainTab:CreateToggle({ Name = "Murderer Aimbot (Must enable notify)", CurrentVal
 MainTab:CreateToggle({ Name = "Sheriff Aimbot (Must enable notify)", CurrentValue = false, Flag = "SAimbot", Callback = function(Value) sheriffaimbot.Value = Value end })
 MainTab:CreateToggle({ Name = "Noclip", CurrentValue = false, Flag = "Noclip", Callback = function(Value) noclip.Value = Value end })
 MainTab:CreateToggle({ Name = "AntiFling", CurrentValue = false, Flag = "AntiFling", Callback = function(Value) antifling.Value = Value end })
+MainTab:CreateToggle({ Name = "Fake Kick", CurrentValue = false, Flag = "FK", Callback = function(Value) fakekick.Value = Value end })
 MainTab:CreateButton({
 	Name = "Rejoin",
 	Callback = function()
@@ -345,7 +353,7 @@ RS.RenderStepped:Connect(function()
 
 			if rr and rr.Instance and rr.Instance:IsDescendantOf(mc) then
 				vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
-				task.wait(0.1)
+				task.wait(0.2)
 				vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
 			end
 		end
