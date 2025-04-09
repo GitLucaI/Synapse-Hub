@@ -180,10 +180,11 @@ function notifyr(p, role)
 						vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
 						task.wait(0.1)
 						vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
-						task.wait()
+						task.wait(0.5)
 					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
 				end
 			end
+			task.wait(0.5)
 		end
 	end
 	task.wait()
