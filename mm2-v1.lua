@@ -1,3 +1,5 @@
+local vim = game:GetService("VirtualInputManager")
+
 local camera = workspace.CurrentCamera
 local channel = game:GetService("TextChatService"):WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
 local player = game.Players.LocalPlayer
@@ -35,7 +37,7 @@ local Window = Rayfield:CreateWindow({
 	ConfigurationSaving = {
 		Enabled = true,
 		FolderName = nil,
-		FileName = "Synapse Hub MM2 ver".. game.PlaceId
+		FileName = "SynapseHubMM2"
 	},
 	Discord = {
 		Enabled = true,
@@ -128,7 +130,7 @@ function notifyr(p, role)
 				Content = p.Name .. " is the " .. role .. "!",
 				Duration = 3.5,
 				Image = "rewind",
-			})
+			}) 
 		elseif role == "Sheriff" and sheriff == nil then
 			print(p, ",", role)
 			Rayfield:Notify({
@@ -157,8 +159,20 @@ function notifyr(p, role)
 			if playerv ~= player then
 				local c = playerv.Character
 				if c and c:FindFirstChild("HumanoidRootPart") and c:FindFirstChildWhichIsA("Humanoid") then
+					player.Backpack.ChildAdded:Connect(function()
+						getgenv().KEY = "One" 
+
+						vim:SendKeyEvent(true, getgenv().KEY, false, game)
+						task.wait(0.1)
+						vim:SendKeyEvent(false, getgenv().KEY, false, game)
+
+					end)
 					repeat
 						primarypartk.CFrame = c.HumanoidRootPart.CFrame
+						
+						vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+						task.wait(0.1)
+						vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
 						task.wait()
 					until c:FindFirstChildWhichIsA("Humanoid").Health <= 0 or not automwin.Value
 				end
@@ -230,7 +244,7 @@ local ESP = MainTab:CreateButton({
 
 MainTab:CreateToggle({ Name = "Notify Roles", CurrentValue = false, Flag = "NotifyToggle", Callback = function(Value) notify.Value = Value end })
 MainTab:CreateToggle({ Name = "Snitch roles", CurrentValue = false, Flag = "SnitchRoles", Callback = function(Value) snitchroles.Value = Value end })
-MainTab:CreateToggle({ Name = "Auto murderer win (Soon)", CurrentValue = false, Flag = "AutoMWin", Callback = function(Value) automwin.Value = Value end })
+MainTab:CreateToggle({ Name = "Auto murderer win", CurrentValue = false, Flag = "AutoMWin", Callback = function(Value) automwin.Value = Value end })
 MainTab:CreateToggle({ Name = "Hero Godmode (Kills You)", CurrentValue = false, Flag = "HG", Callback = function(Value) hg.Value = Value end })
 MainTab:CreateToggle({ Name = "Coin Esp", CurrentValue = false, Flag = "CESP", Callback = function(Value) cesp.Value = Value end })
 MainTab:CreateToggle({ Name = "Get gundrop", CurrentValue = false, Flag = "GrabGunToggle", Callback = function(Value) tptogundrop.Value = Value end })
@@ -300,12 +314,7 @@ MainTab:CreateButton({
 	end,
 })
 
-local Button = MainTab:CreateButton({
-	Name = "Enable FreeCam (Shift + P)",
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GitLucaI/Synapse-Hub/refs/heads/main/freecam"))()
-	end,
-})
+
 
 local function sr()
 	if not notify.Value then return end
@@ -325,6 +334,25 @@ local function sr()
 end
 
 RS.RenderStepped:Connect(sr)
+RS.RenderStepped:Connect(function()
+	if murdereraimbot.Value and murderer and murderer.Character then
+		local mc = murderer.Character
+		local tp = mc:FindFirstChild("Torso") or mc:FindFirstChild("LowerTorso") or mc:FindFirstChild("UpperTorso") or mc:FindFirstChild("HumanoidRootPart")
+
+		if tp then
+			local ro = camera.CFrame.Position
+			local rd = (tp.Position - ro).unit * 500
+
+			local rr = workspace:Raycast(ro, rd)
+
+			if rr and rr.Instance == tp then
+				vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+				task.wait(0.1)
+				vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+			end
+		end
+	end
+end)
 
 workspace.DescendantAdded:Connect(function(d)
 	if d.Name == "GunDrop" and tptogundrop.Value and d:IsA("Part") then
