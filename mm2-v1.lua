@@ -263,7 +263,7 @@ local ESP = MainTab:CreateButton({
 
 MainTab:CreateToggle({ Name = "Notify Roles", CurrentValue = false, Flag = "NotifyToggle", Callback = function(Value) notify.Value = Value end })
 MainTab:CreateToggle({ Name = "Snitch roles", CurrentValue = false, Flag = "SnitchRoles", Callback = function(Value) snitchroles.Value = Value end })
-MainTab:CreateToggle({ Name = "Auto murderer win", CurrentValue = false, Flag = "AutoMWin", Callback = function(Value) automwin.Value = Value end })
+MainTab:CreateToggle({ Name = "Auto murderer win (Broken)", CurrentValue = false, Flag = "AutoMWin", Callback = function(Value) automwin.Value = Value end })
 MainTab:CreateToggle({ Name = "Hero Godmode (Kills You)", CurrentValue = false, Flag = "HG", Callback = function(Value) hg.Value = Value end })
 MainTab:CreateToggle({ Name = "Coin Esp", CurrentValue = false, Flag = "CESP", Callback = function(Value) cesp.Value = Value end })
 MainTab:CreateToggle({ Name = "Get gundrop", CurrentValue = false, Flag = "GrabGunToggle", Callback = function(Value) tptogundrop.Value = Value end })
