@@ -91,7 +91,7 @@ local antifling = Instance.new("BoolValue", script)
 local fakekick = Instance.new("BoolValue", script)
 
 Players.PlayerRemoving:Connect(function(p)
-	if fakekick.Value == true then
+	if fakekick.Value == true and p ~= player then
 		channel:SendAsync(":kick ".. p.Name.. ", SYNHUB on top!", "All")
 	end
 end)
