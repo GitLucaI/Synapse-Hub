@@ -96,7 +96,8 @@ Players.PlayerRemoving:Connect(function(p)
 	end
 end)
 
-RS.RenderStepped:Connect(function()
+
+shownames.Changed:Connect(function()
 	for _, humanoid in pairs(workspace:GetDescendants()) do
 		if humanoid:IsA("Humanoid") and Players:FindFirstChild(humanoid.Parent.Name) and humanoid.Parent.Name ~= player.Name and humanoid.DisplayDistanceType ~= Enum.HumanoidDisplayDistanceType.Viewer then
 			if shownames.Value == true then
@@ -104,6 +105,9 @@ RS.RenderStepped:Connect(function()
 			end
 		end
 	end
+end)
+RS.RenderStepped:Connect(function()
+	
 	if murdereraimbot.Value and murderer and murderer.Character and murderer.Character:FindFirstChild("HumanoidRootPart") then
 		camera.CFrame = CFrame.new(camera.CFrame.Position, murderer.Character.HumanoidRootPart.Position)
 	end
