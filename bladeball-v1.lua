@@ -142,10 +142,10 @@ MainTab:CreateToggle({ Name = "Auto Parry", CurrentValue = false, Flag = "AP", C
 
 local Slider = MainTab:CreateSlider({
 	Name = "Change Radius",
-	Range = {5, 75},
+	Range = {25, 75},
 	Increment = 1,
 	Suffix = "Radius",
-	CurrentValue = 5,
+	CurrentValue = 25,
 	Flag = "RadiusSlider",
 	Callback = function(Value)
 		radius = Value
