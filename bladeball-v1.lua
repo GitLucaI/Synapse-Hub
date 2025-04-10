@@ -16,7 +16,7 @@ local autoparry = Instance.new("BoolValue", script)
 local zone
 
 local dzc = Color3.fromRGB(85, 255, 127)
-local ipdzc = Color3.fromRGB(85, 255, 127)
+local ipdzc = Color3.fromRGB(255, 255, 127)
 local pdzc = Color3.fromRGB(255, 0, 0)
 
 local radius = 25
