@@ -15,8 +15,10 @@ local JobId = game.JobId
 local autoparry = Instance.new("BoolValue", script)
 local zone
 
-local dzc = Color3.fromRGB(255, 255, 255)
+local dzc = Color3.fromRGB(85, 255, 127)
+local ipdzc = Color3.fromRGB(85, 255, 127)
 local pdzc = Color3.fromRGB(255, 0, 0)
+
 local radius = 25
 local function cz()
 	if zone then zone:Destroy() end
@@ -28,13 +30,20 @@ local function cz()
 	zone.CanCollide = false
 	zone.Shape = Enum.PartType.Ball
 	zone.Material = Enum.Material.ForceField
-	zone.Color = Color3.fromRGB(255, 255, 255)
+	zone.Color = dzc
 	zone.Name = "DetectionZone"
 	zone.Parent = workspace
 end
 
+
+
 local function check()
 	for _, obj in pairs(workspace.Balls:GetDescendants()) do
+		if obj:IsA("BasePart") and obj.Color == Color3.fromRGB(255, 30, 30) then
+			if workspace:FindFirstChild("DetectionZone") and ipdzc then
+				workspace:FindFirstChild("DetectionZone").Color = ipdzc
+			end
+		end
 		if obj:IsA("BasePart") and (obj.Position - hrp.Position).Magnitude <= radius and obj.Color == Color3.fromRGB(255, 30, 30) then
 			if workspace:FindFirstChild("DetectionZone") and pdzc then
 				workspace:FindFirstChild("DetectionZone").Color = pdzc
@@ -145,7 +154,7 @@ local Slider = MainTab:CreateSlider({
 
 local ColorPicker = MainTab:CreateColorPicker({
 	Name = "Normal Color",
-	Color = Color3.fromRGB(255,255,255),
+	Color = Color3.fromRGB(85, 255, 127),
 	Flag = "ColorPicker1", 
 	Callback = function(Value)
 		dzc = Value
@@ -154,8 +163,18 @@ local ColorPicker = MainTab:CreateColorPicker({
 
 local ColorPicker = MainTab:CreateColorPicker({
 	Name = "Parrying Color",
+	Color = Color3.fromRGB(255, 255, 127),
+	Flag = "ColorPicker2", 
+	Callback = function(Value)
+		ipdzc = Value
+	end
+})
+
+
+local ColorPicker = MainTab:CreateColorPicker({
+	Name = "Parried Color",
 	Color = Color3.fromRGB(255,0,0),
-	Flag = "ColorPicker1", 
+	Flag = "ColorPicker3", 
 	Callback = function(Value)
 		pdzc = Value
 	end
