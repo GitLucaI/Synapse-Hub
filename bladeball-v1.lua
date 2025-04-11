@@ -13,6 +13,8 @@ local PlaceId = game.PlaceId
 local JobId = game.JobId
 
 local autoparry = Instance.new("BoolValue", script)
+local hidebubble = Instance.new("BoolValue", script)
+
 local zone
 
 local dzc = Color3.fromRGB(85, 255, 127)
@@ -80,6 +82,11 @@ RS.RenderStepped:Connect(function()
 		zone.CFrame = hrp.CFrame
 	end
 	if workspace:FindFirstChild("DetectionZone") and dzc then
+		if hidebubble.Value == true then
+			workspace:FindFirstChild("DetectionZone").Transparency = 1
+		else
+			workspace:FindFirstChild("DetectionZone").Transparency = 0
+		end
 		workspace:FindFirstChild("DetectionZone").Color = dzc
 		workspace:FindFirstChild("DetectionZone").Size = Vector3.new(radius, radius, radius)
 	end
@@ -139,6 +146,8 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("Main", 4483362458)
 
 MainTab:CreateToggle({ Name = "Auto Parry", CurrentValue = false, Flag = "AP", Callback = function(Value) autoparry.Value = Value end })
+
+MainTab:CreateToggle({ Name = "Hide Bubble", CurrentValue = false, Flag = "AP", Callback = function(Value) hidebubble.Value = Value end })
 
 local Slider = MainTab:CreateSlider({
 	Name = "Change Radius",
